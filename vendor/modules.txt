@@ -1,0 +1,29 @@
+# github.com/aaronland/go-json-query v0.1.0
+github.com/aaronland/go-json-query
+# github.com/aaronland/go-roster v0.0.2
+## explicit
+github.com/aaronland/go-roster
+# github.com/tidwall/gjson v1.9.1
+## explicit
+github.com/tidwall/gjson
+# github.com/tidwall/match v1.0.3
+github.com/tidwall/match
+# github.com/tidwall/pretty v1.2.0
+github.com/tidwall/pretty
+# github.com/whosonfirst/go-ioutil v1.0.0
+github.com/whosonfirst/go-ioutil
+# github.com/whosonfirst/go-whosonfirst-crawl v0.2.1
+github.com/whosonfirst/go-whosonfirst-crawl
+# github.com/whosonfirst/go-whosonfirst-iterate v1.2.0
+## explicit
+github.com/whosonfirst/go-whosonfirst-iterate/emitter
+github.com/whosonfirst/go-whosonfirst-iterate/filters
+github.com/whosonfirst/go-whosonfirst-iterate/iterator
+# github.com/whosonfirst/go-whosonfirst-sources v0.1.0
+github.com/whosonfirst/go-whosonfirst-sources
+github.com/whosonfirst/go-whosonfirst-sources/sources
+# github.com/whosonfirst/go-whosonfirst-uri v1.1.0
+## explicit
+github.com/whosonfirst/go-whosonfirst-uri
+# github.com/whosonfirst/walk v0.0.1
+github.com/whosonfirst/walk
