@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "github.com/sfomuseum/go-sfomuseum-curatorial/collection"
 	_ "github.com/sfomuseum/go-sfomuseum-curatorial/exhibitions"
 	_ "github.com/sfomuseum/go-sfomuseum-curatorial/publicart"
 )

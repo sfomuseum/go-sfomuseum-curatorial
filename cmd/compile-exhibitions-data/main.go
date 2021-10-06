@@ -41,7 +41,7 @@ func main() {
 	lookup, err := exhibitions.CompileExhibitionsData(ctx, *iterator_uri, *iterator_source)
 
 	if err != nil {
-		log.Fatalf("Failed to compile public art works data, %v", err)
+		log.Fatalf("Failed to compile exhibitions data, %v", err)
 	}
 
 	enc := json.NewEncoder(wr)

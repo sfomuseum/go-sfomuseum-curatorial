@@ -1,6 +1,7 @@
 compile-all:
 	@make compile-publicart-data
 	@make compile-exhibitions-data
+	@make compile-collection-data
 	go build -mod vendor -o bin/lookup cmd/lookup/main.go
 
 compile-publicart-data:
@@ -8,3 +9,6 @@ compile-publicart-data:
 
 compile-exhibitions-data:
 	go run -mod vendor cmd/compile-exhibitions-data/main.go
+
+compile-collection-data:
+	go run -mod vendor cmd/compile-collection-data/main.go
