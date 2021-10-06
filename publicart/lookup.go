@@ -208,10 +208,13 @@ func appendData(ctx context.Context, table *sync.Map, data *PublicArtWork) error
 	possible_codes := []string{
 		str_wofid,
 		str_sfomid,
+		fmt.Sprintf("wof:id=%s", str_wofid),
+		fmt.Sprintf("sfomuseum:object_id=%s", str_sfomid),
 	}
 
 	if data.MapId != "" {
 		possible_codes = append(possible_codes, data.MapId)
+		possible_codes = append(possible_codes, fmt.Sprintf("sfomuseum:map_id=%s", data.MapId))
 	}
 
 	for _, code := range possible_codes {

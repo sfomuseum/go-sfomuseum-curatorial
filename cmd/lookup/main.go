@@ -1,8 +1,8 @@
 package main
 
 import (
-	_ "github.com/sfomuseum/go-sfomuseum-curatorial/publicart"
 	_ "github.com/sfomuseum/go-sfomuseum-curatorial/exhibitions"
+	_ "github.com/sfomuseum/go-sfomuseum-curatorial/publicart"
 )
 
 import (
@@ -24,7 +24,7 @@ func main() {
 	flag.Parse()
 
 	ctx := context.Background()
-	
+
 	lookup, err := curatorial.NewLookup(ctx, *lookup_uri)
 
 	if err != nil {

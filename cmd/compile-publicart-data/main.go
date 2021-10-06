@@ -12,7 +12,7 @@ import (
 
 func main() {
 
-	iterator_uri := flag.String("iterator-uri", "repo://?exclude=properties.edtf:deprecated=.*", "A valid whosonfirst/go-whosonfirst-iterate URI")
+	iterator_uri := flag.String("iterator-uri", "repo://?exclude=properties.edtf:deprecated=.*", "A valid whosonfirst/go-whosonfirst-iterate/v2 URI")
 	iterator_source := flag.String("iterator-source", "/usr/local/data/sfomuseum-data-publicart", "The URI containing documents to iterate.")
 
 	target := flag.String("target", "data/publicart.json", "The path to write SFO Museum public art data.")

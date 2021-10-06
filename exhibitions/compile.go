@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/tidwall/gjson"
-	"github.com/whosonfirst/go-whosonfirst-iterate/emitter"
-	"github.com/whosonfirst/go-whosonfirst-iterate/iterator"
+	"github.com/whosonfirst/go-whosonfirst-feature/properties"
+	"github.com/whosonfirst/go-whosonfirst-iterate/v2/iterator"
 	"github.com/whosonfirst/go-whosonfirst-uri"
 	"io"
 	_ "log"
@@ -17,19 +17,13 @@ func CompileExhibitionsData(ctx context.Context, iterator_uri string, iterator_s
 	lookup := make([]*Exhibition, 0)
 	mu := new(sync.RWMutex)
 
-	iter_cb := func(ctx context.Context, fh io.ReadSeeker, args ...interface{}) error {
+	iter_cb := func(ctx context.Context, path string, fh io.ReadSeeker, args ...interface{}) error {
 
 		select {
 		case <-ctx.Done():
 			return nil
 		default:
 			// pass
-		}
-
-		path, err := emitter.PathForContext(ctx)
-
-		if err != nil {
-			return fmt.Errorf("Failed to derive path from context, %w", err)
 		}
 
 		_, uri_args, err := uri.ParseURI(path)
@@ -61,10 +55,17 @@ func CompileExhibitionsData(ctx context.Context, iterator_uri string, iterator_s
 
 		name_rsp := gjson.GetBytes(body, "properties.wof:name")
 
+		is_current, err := properties.IsCurrent(body)
+
+		if err != nil {
+			return fmt.Errorf("Failed to derive is current for %s, %w", path, err)
+		}
+
 		w := &Exhibition{
 			WhosOnFirstId: wofid_rsp.Int(),
 			SFOMuseumId:   sfomid_rsp.Int(),
 			Name:          name_rsp.String(),
+			IsCurrent:     is_current.Flag(),
 		}
 
 		mu.Lock()

@@ -3,10 +3,14 @@ github.com/aaronland/go-json-query
 # github.com/aaronland/go-roster v0.0.2
 ## explicit
 github.com/aaronland/go-roster
-# github.com/tidwall/gjson v1.9.1
+# github.com/paulmach/orb v0.2.2
+github.com/paulmach/orb
+# github.com/sfomuseum/go-edtf v0.3.0
+github.com/sfomuseum/go-edtf
+# github.com/tidwall/gjson v1.9.2
 ## explicit
 github.com/tidwall/gjson
-# github.com/tidwall/match v1.0.3
+# github.com/tidwall/match v1.1.0
 github.com/tidwall/match
 # github.com/tidwall/pretty v1.2.0
 github.com/tidwall/pretty
@@ -14,11 +18,17 @@ github.com/tidwall/pretty
 github.com/whosonfirst/go-ioutil
 # github.com/whosonfirst/go-whosonfirst-crawl v0.2.1
 github.com/whosonfirst/go-whosonfirst-crawl
-# github.com/whosonfirst/go-whosonfirst-iterate v1.2.0
+# github.com/whosonfirst/go-whosonfirst-feature v0.0.11
 ## explicit
-github.com/whosonfirst/go-whosonfirst-iterate/emitter
-github.com/whosonfirst/go-whosonfirst-iterate/filters
-github.com/whosonfirst/go-whosonfirst-iterate/iterator
+github.com/whosonfirst/go-whosonfirst-feature/properties
+# github.com/whosonfirst/go-whosonfirst-flags v0.4.3
+github.com/whosonfirst/go-whosonfirst-flags
+github.com/whosonfirst/go-whosonfirst-flags/existential
+# github.com/whosonfirst/go-whosonfirst-iterate/v2 v2.0.0
+## explicit
+github.com/whosonfirst/go-whosonfirst-iterate/v2/emitter
+github.com/whosonfirst/go-whosonfirst-iterate/v2/filters
+github.com/whosonfirst/go-whosonfirst-iterate/v2/iterator
 # github.com/whosonfirst/go-whosonfirst-sources v0.1.0
 github.com/whosonfirst/go-whosonfirst-sources
 github.com/whosonfirst/go-whosonfirst-sources/sources

@@ -208,6 +208,8 @@ func appendData(ctx context.Context, table *sync.Map, data *Exhibition) error {
 	possible_codes := []string{
 		str_wofid,
 		str_sfomid,
+		fmt.Sprintf("wof:id=%s", str_wofid),
+		fmt.Sprintf("sfomuseum:exhibition_id=%s", str_sfomid),
 	}
 
 	for _, code := range possible_codes {
