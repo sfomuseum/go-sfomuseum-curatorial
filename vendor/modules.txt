@@ -3,11 +3,11 @@ github.com/aaronland/go-json-query
 # github.com/aaronland/go-roster v0.0.2
 ## explicit
 github.com/aaronland/go-roster
-# github.com/paulmach/orb v0.3.0
+# github.com/paulmach/orb v0.4.0
 github.com/paulmach/orb
 # github.com/sfomuseum/go-edtf v0.3.1
 github.com/sfomuseum/go-edtf
-# github.com/tidwall/gjson v1.11.0
+# github.com/tidwall/gjson v1.12.1
 ## explicit
 github.com/tidwall/gjson
 # github.com/tidwall/match v1.1.1
@@ -18,7 +18,7 @@ github.com/tidwall/pretty
 github.com/whosonfirst/go-ioutil
 # github.com/whosonfirst/go-whosonfirst-crawl v0.2.1
 github.com/whosonfirst/go-whosonfirst-crawl
-# github.com/whosonfirst/go-whosonfirst-feature v0.0.17
+# github.com/whosonfirst/go-whosonfirst-feature v0.0.18
 ## explicit
 github.com/whosonfirst/go-whosonfirst-feature/properties
 # github.com/whosonfirst/go-whosonfirst-flags v0.4.3

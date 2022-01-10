@@ -1,3 +1,6 @@
+cli:
+	go build -mod vendor -o bin/lookup cmd/lookup/main.go
+
 compile-all:
 	@make compile-publicart-data
 	@make compile-exhibitions-data

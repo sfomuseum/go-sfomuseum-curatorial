@@ -15,6 +15,8 @@ github.com/paulmach/orb v0.2.2 h1:PblToKAbU0xHVypex/GdZfibA1CeCfN5s0UjxyWExdo=
 github.com/paulmach/orb v0.2.2/go.mod h1:FkcWtplUAIVqAuhAOV2d3rpbnQyliDOjOcLW9dUrfdU=
 github.com/paulmach/orb v0.3.0 h1:JVitu/3sn0eslA0XGWfibiyNk+QNRAp9+oO5db53a7o=
 github.com/paulmach/orb v0.3.0/go.mod h1:FkcWtplUAIVqAuhAOV2d3rpbnQyliDOjOcLW9dUrfdU=
+github.com/paulmach/orb v0.4.0 h1:ilp1MQjRapLJ1+qcays1nZpe0mvkCY+b8JU/qBKRZ1A=
+github.com/paulmach/orb v0.4.0/go.mod h1:FkcWtplUAIVqAuhAOV2d3rpbnQyliDOjOcLW9dUrfdU=
 github.com/paulmach/protoscan v0.2.1-0.20210522164731-4e53c6875432/go.mod h1:2sV+uZ/oQh66m4XJVZm5iqUZ62BN88Ex1E+TTS0nLzI=
 github.com/pkg/errors v0.8.0/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/sfomuseum/go-edtf v0.2.3/go.mod h1:1rP0EJZ/84j3HO80vGcnG2T9MFBDAFyTNtjrr8cv3T4=
@@ -33,6 +35,8 @@ github.com/tidwall/gjson v1.9.3/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlf
 github.com/tidwall/gjson v1.10.2/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=
 github.com/tidwall/gjson v1.11.0 h1:C16pk7tQNiH6VlCrtIXL1w8GaOsi1X3W8KDkE1BuYd4=
 github.com/tidwall/gjson v1.11.0/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=
+github.com/tidwall/gjson v1.12.1 h1:ikuZsLdhr8Ws0IdROXUS1Gi4v9Z4pGqpX/CvJkxvfpo=
+github.com/tidwall/gjson v1.12.1/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=
 github.com/tidwall/match v1.0.3 h1:FQUVvBImDutD8wJLN6c5eMzWtjgONK9MwIBCOrUJKeE=
 github.com/tidwall/match v1.0.3/go.mod h1:eRSPERbgtNPcGhD8UCthc6PmLEQXEWd3PRB5JTxsfmM=
 github.com/tidwall/match v1.1.0 h1:VfI2e2aXLvytih7WUVyO9uvRC+RcXlaTrMbHuQWnFmk=
@@ -52,6 +56,8 @@ github.com/whosonfirst/go-whosonfirst-feature v0.0.15 h1:pedqngP69ZY+Fwg08r8Ec0i
 github.com/whosonfirst/go-whosonfirst-feature v0.0.15/go.mod h1:IgCgCT3G0c21YVGNyquPc+pi4YhHxZYb7sOxU5iRUhU=
 github.com/whosonfirst/go-whosonfirst-feature v0.0.17 h1:oDN8YcpuRlBxz5UQ8+M9MSdf3eduLEK8+roiUZHYTAI=
 github.com/whosonfirst/go-whosonfirst-feature v0.0.17/go.mod h1:vwNwMQLTL+vb88CXtTe4N63TLCn8DYREqR/Zm2Fn5rA=
+github.com/whosonfirst/go-whosonfirst-feature v0.0.18 h1:H83tuk4JkQqur3BjNcOmxgl6NhmQAYEqPx4yTlpONCY=
+github.com/whosonfirst/go-whosonfirst-feature v0.0.18/go.mod h1:MZXzywduLfMO7s0NlwD8vDXyyDLkzxO4R8BJM1HCBHA=
 github.com/whosonfirst/go-whosonfirst-flags v0.4.3 h1:ef6IkgvYADL4kc750sl6i5hkReNq0Z6upLcqpK2CHLY=
 github.com/whosonfirst/go-whosonfirst-flags v0.4.3/go.mod h1:pL17Ryo60FH8RYaQRgfu5XnxhrNRK3x+rn03TYD6Gc8=
 github.com/whosonfirst/go-whosonfirst-iterate v1.2.0 h1:+wouZy6JPIrmLBZdFDqI1UJWthbpwGc1JRdnLbW6hIc=

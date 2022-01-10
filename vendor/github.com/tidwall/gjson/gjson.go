@@ -229,17 +229,19 @@ func (t Result) ForEach(iterator func(key, value Result) bool) {
 		return
 	}
 	json := t.Raw
-	var keys bool
+	var obj bool
 	var i int
 	var key, value Result
 	for ; i < len(json); i++ {
 		if json[i] == '{' {
 			i++
 			key.Type = String
-			keys = true
+			obj = true
 			break
 		} else if json[i] == '[' {
 			i++
+			key.Type = Number
+			key.Num = -1
 			break
 		}
 		if json[i] > ' ' {
@@ -251,7 +253,7 @@ func (t Result) ForEach(iterator func(key, value Result) bool) {
 	var ok bool
 	var idx int
 	for ; i < len(json); i++ {
-		if keys {
+		if obj {
 			if json[i] != '"' {
 				continue
 			}
@@ -267,6 +269,8 @@ func (t Result) ForEach(iterator func(key, value Result) bool) {
 			}
 			key.Raw = str
 			key.Index = s + t.Index
+		} else {
+			key.Num += 1
 		}
 		for ; i < len(json); i++ {
 			if json[i] <= ' ' || json[i] == ',' || json[i] == ':' {
@@ -1728,7 +1732,7 @@ type subSelector struct {
 // first character in path is either '[' or '{', and has already been checked
 // prior to calling this function.
 func parseSubSelectors(path string) (sels []subSelector, out string, ok bool) {
-	modifer := 0
+	modifier := 0
 	depth := 1
 	colon := 0
 	start := 1
@@ -1743,6 +1747,7 @@ func parseSubSelectors(path string) (sels []subSelector, out string, ok bool) {
 		}
 		sels = append(sels, sel)
 		colon = 0
+		modifier = 0
 		start = i + 1
 	}
 	for ; i < len(path); i++ {
@@ -1750,11 +1755,11 @@ func parseSubSelectors(path string) (sels []subSelector, out string, ok bool) {
 		case '\\':
 			i++
 		case '@':
-			if modifer == 0 && i > 0 && (path[i-1] == '.' || path[i-1] == '|') {
-				modifer = i
+			if modifier == 0 && i > 0 && (path[i-1] == '.' || path[i-1] == '|') {
+				modifier = i
 			}
 		case ':':
-			if modifer == 0 && colon == 0 && depth == 1 {
+			if modifier == 0 && colon == 0 && depth == 1 {
 				colon = i
 			}
 		case ',':
@@ -1807,7 +1812,7 @@ func isSimpleName(component string) bool {
 			return false
 		}
 		switch component[i] {
-		case '[', ']', '{', '}', '(', ')', '#', '|':
+		case '[', ']', '{', '}', '(', ')', '#', '|', '!':
 			return false
 		}
 	}
@@ -1871,23 +1876,25 @@ type parseContext struct {
 // use the Valid function first.
 func Get(json, path string) Result {
 	if len(path) > 1 {
-		if !DisableModifiers {
-			if path[0] == '@' {
-				// possible modifier
-				var ok bool
-				var npath string
-				var rjson string
+		if (path[0] == '@' && !DisableModifiers) || path[0] == '!' {
+			// possible modifier
+			var ok bool
+			var npath string
+			var rjson string
+			if path[0] == '@' && !DisableModifiers {
 				npath, rjson, ok = execModifier(json, path)
-				if ok {
-					path = npath
-					if len(path) > 0 && (path[0] == '|' || path[0] == '.') {
-						res := Get(rjson, path[1:])
-						res.Index = 0
-						res.Indexes = nil
-						return res
-					}
-					return Parse(rjson)
+			} else if path[0] == '!' {
+				npath, rjson, ok = execStatic(json, path)
+			}
+			if ok {
+				path = npath
+				if len(path) > 0 && (path[0] == '|' || path[0] == '.') {
+					res := Get(rjson, path[1:])
+					res.Index = 0
+					res.Indexes = nil
+					return res
 				}
+				return Parse(rjson)
 			}
 		}
 		if path[0] == '[' || path[0] == '{' {
@@ -2556,8 +2563,40 @@ func safeInt(f float64) (n int64, ok bool) {
 	return int64(f), true
 }
 
+// execStatic parses the path to find a static value.
+// The input expects that the path already starts with a '!'
+func execStatic(json, path string) (pathOut, res string, ok bool) {
+	name := path[1:]
+	if len(name) > 0 {
+		switch name[0] {
+		case '{', '[', '"', '+', '-', '0', '1', '2', '3', '4', '5', '6', '7',
+			'8', '9':
+			_, res = parseSquash(name, 0)
+			pathOut = name[len(res):]
+			return pathOut, res, true
+		}
+	}
+	for i := 1; i < len(path); i++ {
+		if path[i] == '|' {
+			pathOut = path[i:]
+			name = path[1:i]
+			break
+		}
+		if path[i] == '.' {
+			pathOut = path[i:]
+			name = path[1:i]
+			break
+		}
+	}
+	switch strings.ToLower(name) {
+	case "true", "false", "null", "nan", "inf":
+		return pathOut, name, true
+	}
+	return pathOut, res, false
+}
+
 // execModifier parses the path to find a matching modifier function.
-// then input expects that the path already starts with a '@'
+// The input expects that the path already starts with a '@'
 func execModifier(json, path string) (pathOut, res string, ok bool) {
 	name := path[1:]
 	var hasArgs bool
