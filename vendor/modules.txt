@@ -102,6 +102,7 @@ github.com/whosonfirst/go-whosonfirst-geojson-v2/utils
 # github.com/whosonfirst/go-whosonfirst-hash v0.1.0
 github.com/whosonfirst/go-whosonfirst-hash
 # github.com/whosonfirst/go-whosonfirst-id v0.0.3
+## explicit
 github.com/whosonfirst/go-whosonfirst-id
 # github.com/whosonfirst/go-whosonfirst-iterate/v2 v2.0.2
 ## explicit
