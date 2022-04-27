@@ -18,10 +18,10 @@ func main() {
 
 	architecture_reader_uri := flag.String("architecture-reader-uri", "repo:///usr/local/data/sfomuseum-data-architecture", "")
 
-	exhibition_reader_uri := flag.String("exhibition-reader-uri", "repo:///usr/local/data/sfomuseum-data-exhibition", "")
-	exhibition_writer_uri := flag.String("exhibition-writer-uri", "", "If empty, the value of the -exhibition-reader-uri flag will be used.")
+	exhibition_reader_uri := flag.String("exhibitions-reader-uri", "repo:///usr/local/data/sfomuseum-data-exhibition", "")
+	exhibition_writer_uri := flag.String("exhibitions-writer-uri", "", "If empty, the value of the -exhibition-reader-uri flag will be used.")
 
-	exhibition_id := flag.Int64("gallery-id", 0, "The SFO Museum exhibition ID to supersede")
+	exhibition_id := flag.Int64("exhibition-id", 0, "The SFO Museum exhibition ID to supersede")
 	parent_id := flag.Int64("parent-id", 0, "The SFO Museum parent ID of the new exhibition")
 
 	flag.Parse()
@@ -121,6 +121,8 @@ func main() {
 		if err != nil {
 			return fmt.Errorf("Failed to write previous exhibition, %w", err)
 		}
+
+		log.Printf("Created new exhibition with ID %d\n", new_id)
 
 		// Something something something.
 		// Do this recursively based on the end date of the exhibition
