@@ -11,6 +11,7 @@ import (
 	"github.com/tidwall/gjson"
 	"github.com/whosonfirst/go-reader"
 	"github.com/whosonfirst/go-whosonfirst-export/v2"
+	"github.com/whosonfirst/go-whosonfirst-feature/properties"
 	"github.com/whosonfirst/go-writer"
 	"log"
 )
@@ -18,7 +19,7 @@ import (
 func main() {
 
 	architecture_reader_uri := flag.String("architecture-reader-uri", "repo:///usr/local/data/sfomuseum-data-architecture", "")
-	exhibitions_reader_uri := flag.String("exhibitions-reader-uri", "repo:///usr/local/data/sfomuseum-data-exhibitions", "")
+	exhibitions_reader_uri := flag.String("exhibitions-reader-uri", "repo:///usr/local/data/sfomuseum-data-exhibition", "")
 	exhibitions_writer_uri := flag.String("exhibitions-writer-uri", "", "If empty, the value of the -exhibitions-reader-uri flag will be used.")
 	exhibition_id := flag.Int64("exhibition-id", 0, "The SFO Museum exhibition ID to update.")
 
@@ -80,16 +81,32 @@ func main() {
 		updates["properties.wof:parent_id"] = gjson.GetBytes(galleries[0], "properties.wof:id").Int()
 		updates["properties.wof:hierarchy"] = gjson.GetBytes(galleries[0], "properties.wof:hierarchy").Value()
 		updates["properties.sfomuseum:post_security"] = gjson.GetBytes(galleries[0], "properties.sfomuseum:post_security").Value()
+		updates["geometry"] = gjson.GetBytes(galleries[0], "geometry").Value()
 	default:
 
 		hiers := make([]map[string]interface{}, 0)
+		coords := make([][]float64, 0)
 
-		for _, r := range gjson.GetBytes(galleries[0], "properties.wof:hierarchy").Array() {
-			hiers = append(hiers, r.Value().(map[string]interface{}))
+		for _, body := range galleries {
+
+			for _, r := range gjson.GetBytes(body, "properties.wof:hierarchy").Array() {
+				hiers = append(hiers, r.Value().(map[string]interface{}))
+			}
+
+			pt, _, err := properties.Centroid(body)
+
+			if err != nil {
+				log.Fatalf("Failed to derive centroid for gallery, %v", err)
+			}
+
+			coords = append(coords, []float64{pt.X(), pt.Y()})
 		}
 
 		updates["properties.wof:parent_id"] = -4
 		updates["properties.wof:hierarchy"] = hiers
+
+		updates["geometry.type"] = "MultiPoint"
+		updates["geometry.coordinates"] = coords
 	}
 
 	has_updates, exh_f, err := export.AssignPropertiesIfChanged(ctx, exh_f, updates)
