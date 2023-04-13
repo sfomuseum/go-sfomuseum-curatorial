@@ -4,14 +4,15 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"log"
+
 	sfom_reader "github.com/sfomuseum/go-sfomuseum-reader"
-	sfom_writer "github.com/sfomuseum/go-sfomuseum-writer"
+	sfom_writer "github.com/sfomuseum/go-sfomuseum-writer/v3"
 	"github.com/tidwall/gjson"
 	"github.com/whosonfirst/go-reader"
 	"github.com/whosonfirst/go-whosonfirst-export/v2"
 	"github.com/whosonfirst/go-whosonfirst-id"
-	"github.com/whosonfirst/go-writer"
-	"log"
+	"github.com/whosonfirst/go-writer/v3"
 )
 
 func main() {
@@ -70,7 +71,7 @@ func main() {
 			return fmt.Errorf("Failed to load parent record, %w", err)
 		}
 
-		new_id, err := id_provider.NewID()
+		new_id, err := id_provider.NewID(ctx)
 
 		if err != nil {
 			return fmt.Errorf("Failed to create new ID, %w", err)
@@ -95,7 +96,7 @@ func main() {
 			return fmt.Errorf("Failed to export new exh, %w", err)
 		}
 
-		_, err = sfom_writer.WriteFeatureBytes(ctx, exh_wr, new_exh)
+		_, err = sfom_writer.WriteBytes(ctx, exh_wr, new_exh)
 
 		if err != nil {
 			return fmt.Errorf("Failed to write new exhibition, %w", err)
@@ -116,7 +117,7 @@ func main() {
 			return fmt.Errorf("Failed to export new exhibition, %w", err)
 		}
 
-		_, err = sfom_writer.WriteFeatureBytes(ctx, exh_wr, exh_f)
+		_, err = sfom_writer.WriteBytes(ctx, exh_wr, exh_f)
 
 		if err != nil {
 			return fmt.Errorf("Failed to write previous exhibition, %w", err)

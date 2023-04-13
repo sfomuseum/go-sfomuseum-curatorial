@@ -3,6 +3,7 @@ package exhibitions
 import (
 	"context"
 	"fmt"
+
 	"github.com/sfomuseum/go-sfomuseum-curatorial"
 )
 

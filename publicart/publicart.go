@@ -3,6 +3,7 @@ package publicart
 import (
 	"context"
 	"fmt"
+
 	"github.com/sfomuseum/go-sfomuseum-curatorial"
 )
 

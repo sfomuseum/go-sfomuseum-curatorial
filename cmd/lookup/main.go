@@ -10,9 +10,10 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"github.com/sfomuseum/go-sfomuseum-curatorial"
 	"log"
 	"strings"
+
+	"github.com/sfomuseum/go-sfomuseum-curatorial"
 )
 
 func main() {

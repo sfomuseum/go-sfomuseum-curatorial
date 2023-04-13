@@ -4,8 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/sfomuseum/go-sfomuseum-curatorial"
-	"github.com/sfomuseum/go-sfomuseum-curatorial/data"
 	"io"
 	"net/http"
 	"net/url"
@@ -13,6 +11,9 @@ import (
 	"strings"
 	"sync"
 	"sync/atomic"
+
+	"github.com/sfomuseum/go-sfomuseum-curatorial"
+	"github.com/sfomuseum/go-sfomuseum-curatorial/data"
 )
 
 var lookup_table *sync.Map
@@ -35,9 +36,13 @@ func init() {
 
 // NewLookup will return an `curatorial.Lookup` instance. By default the lookup table is derived from precompiled (embedded) data in `data/publicart.json`
 // by passing in `publicart://` as the URI. It is also possible to create a new lookup table with the following URI options:
-// 	`publicart://github`
+//
+//	`publicart://github`
+//
 // This will cause the lookup table to be derived from the data stored at https://raw.githubusercontent.com/sfomuseum/go-sfomuseum-curatorial/main/data/publicart.json. This might be desirable if there have been updates to the underlying data that are not reflected in the locally installed package's pre-compiled data.
+//
 //	`publicart://iterator?uri={URI}&source={SOURCE}`
+//
 // This will cause the lookup table to be derived, at runtime, from data emitted by a `whosonfirst/go-whosonfirst-iterate` instance. `{URI}` should be a valid `whosonfirst/go-whosonfirst-iterate/iterator` URI and `{SOURCE}` is one or more URIs for the iterator to process.
 func NewLookup(ctx context.Context, uri string) (curatorial.Lookup, error) {
 

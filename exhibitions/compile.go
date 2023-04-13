@@ -3,13 +3,14 @@ package exhibitions
 import (
 	"context"
 	"fmt"
+	"io"
+	_ "log"
+	"sync"
+
 	"github.com/tidwall/gjson"
 	"github.com/whosonfirst/go-whosonfirst-feature/properties"
 	"github.com/whosonfirst/go-whosonfirst-iterate/v2/iterator"
 	"github.com/whosonfirst/go-whosonfirst-uri"
-	"io"
-	_ "log"
-	"sync"
 )
 
 func CompileExhibitionsData(ctx context.Context, iterator_uri string, iterator_sources ...string) ([]*Exhibition, error) {

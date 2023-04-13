@@ -2,8 +2,9 @@ package publicart
 
 import (
 	"context"
-	"github.com/sfomuseum/go-sfomuseum-curatorial"
 	"testing"
+
+	"github.com/sfomuseum/go-sfomuseum-curatorial"
 )
 
 func TestPublicArtLookup(t *testing.T) {

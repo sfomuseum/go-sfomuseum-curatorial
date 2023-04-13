@@ -2,8 +2,9 @@ package collection
 
 import (
 	"context"
-	"github.com/sfomuseum/go-sfomuseum-curatorial"
 	"testing"
+
+	"github.com/sfomuseum/go-sfomuseum-curatorial"
 )
 
 func TestCollectionLookup(t *testing.T) {

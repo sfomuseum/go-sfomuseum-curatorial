@@ -4,10 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"flag"
-	"github.com/sfomuseum/go-sfomuseum-curatorial/publicart"
 	"io"
 	"log"
 	"os"
+
+	"github.com/sfomuseum/go-sfomuseum-curatorial/publicart"
 )
 
 func main() {
