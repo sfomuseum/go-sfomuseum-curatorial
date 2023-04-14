@@ -4,7 +4,10 @@ go 1.18
 
 require (
 	github.com/aaronland/go-roster v1.0.0
+	github.com/paulmach/orb v0.8.0
+	github.com/sfomuseum/go-csvdict v1.0.0
 	github.com/sfomuseum/go-flags v0.10.0
+	github.com/sfomuseum/go-sfomuseum-feature v1.2.0
 	github.com/sfomuseum/go-sfomuseum-reader v0.0.2
 	github.com/sfomuseum/go-sfomuseum-writer/v3 v3.0.0
 	github.com/tidwall/gjson v1.14.4
@@ -35,7 +38,6 @@ require (
 	github.com/mmcloughlin/geohash v0.10.0 // indirect
 	github.com/natefinch/atomic v1.0.1 // indirect
 	github.com/paulmach/go.geojson v1.4.0 // indirect
-	github.com/paulmach/orb v0.8.0 // indirect
 	github.com/sfomuseum/go-edtf v1.1.1 // indirect
 	github.com/sfomuseum/go-sfomuseum-export/v2 v2.3.7 // indirect
 	github.com/sfomuseum/go-sfomuseum-geojson v0.1.3 // indirect
