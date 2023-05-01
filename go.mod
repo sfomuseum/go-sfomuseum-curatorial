@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/aaronland/go-roster v1.0.0
+	github.com/dominikbraun/graph v0.20.0
 	github.com/paulmach/orb v0.8.0
 	github.com/sfomuseum/go-csvdict v1.0.0
 	github.com/sfomuseum/go-flags v0.10.0
