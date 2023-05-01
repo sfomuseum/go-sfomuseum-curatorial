@@ -16,6 +16,7 @@ require (
 	github.com/whosonfirst/go-whosonfirst-feature v0.0.26
 	github.com/whosonfirst/go-whosonfirst-id v1.2.0
 	github.com/whosonfirst/go-whosonfirst-iterate/v2 v2.3.2
+	github.com/whosonfirst/go-whosonfirst-reader v1.0.1
 	github.com/whosonfirst/go-whosonfirst-uri v1.3.0
 	github.com/whosonfirst/go-writer/v3 v3.1.0
 )
