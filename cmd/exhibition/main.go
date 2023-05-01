@@ -7,7 +7,11 @@ import (
 	"io"
 	"log"
 	"os"
+	"bytes"
+	"bufio"
+	"image/png"
 
+	"github.com/goccy/go-graphviz"	
 	"github.com/dominikbraun/graph"
 	"github.com/dominikbraun/graph/draw"
 	"github.com/whosonfirst/go-reader"
@@ -28,7 +32,7 @@ type Feature struct {
 }
 
 func (f *Feature) String() string {
-	return fmt.Sprintf("%d %s (%s, %s)", f.Id, f.Name, f.Inception, f.Cessation)
+	return fmt.Sprintf("%s\n%d (%d)\ninception: %s cessation: %s\nsupersedes %v\nsuperseded by: %v", f.Name, f.Id, f.ParentId, f.Inception, f.Cessation, f.Supersedes, f.SupersededBy)
 }
 
 func main() {
@@ -58,9 +62,27 @@ func main() {
 	featureHash := func(f *Feature) string {
 		return f.String()
 	}
+
+	feature_attrs := []func(*graph.VertexProperties){
+		graph.VertexAttribute("shape", "box"),
+		graph.VertexAttribute("color", "black"),
+		graph.VertexAttribute("decorate", "true"),
+		graph.VertexAttribute("fontsize", "10"),
+		graph.VertexAttribute("linelength", "150"),
+		graph.VertexAttribute("margin", ".5"),
+	}
+
+	parent_attrs := []func(*graph.VertexProperties){
+		graph.VertexAttribute("shape", "ellipse"),
+		graph.VertexAttribute("color", "grey"),
+		graph.VertexAttribute("decorate", "true"),
+		graph.VertexAttribute("fontsize", "10"),
+		graph.VertexAttribute("linelength", "150"),		
+		graph.VertexAttribute("margin", ".5"),
+	}
 	
 	g := graph.New(featureHash, graph.Directed(), graph.Acyclic())
-
+	
 	iter_cb := func(ctx context.Context, path string, r io.ReadSeeker, args ...interface{}) error {
 
 		id, uri_args, err := uri.ParseURI(path)
@@ -84,17 +106,8 @@ func main() {
 		if err != nil {
 			return fmt.Errorf("Failed to derive feature for %s, %w", path, err)
 		}
-
-		parent_f, err := deriveFeature(ctx, parent_r, f.ParentId)
-		
-		if err != nil {
-			return fmt.Errorf("Failed to load parent ID (%d) for %s, %w", f.ParentId, path, err)
-		}
 				
-		g.AddVertex(f)
-		g.AddVertex(parent_f)
-			
-		g.AddEdge(f.String(), parent_f.String())
+		g.AddVertex(f, feature_attrs...)
 
 		for _, other_id := range f.Supersedes {
 				
@@ -104,7 +117,7 @@ func main() {
 				return fmt.Errorf("Failed to derive feature for supersedes ID (%d) for %s, %w", other_id, path, err)
 			}
 			
-			g.AddVertex(other_f)
+			g.AddVertex(other_f, feature_attrs...)
 			g.AddEdge(f.String(), other_f.String())
 		}
 
@@ -116,10 +129,22 @@ func main() {
 				return fmt.Errorf("Failed to derive feature for superseded_by ID (%d) for %s, %w", other_id, path, err)
 			}
 			
-			g.AddVertex(other_f)
-			g.AddEdge(other_f.String(), f.String())
+			g.AddVertex(other_f, feature_attrs...)
+			g.AddEdge(f.String(), other_f.String())
 		}
 
+		// return nil
+		
+		parent_f, err := deriveFeature(ctx, parent_r, f.ParentId)
+		
+		if err != nil {
+			return fmt.Errorf("Failed to load parent ID (%d) for %s, %w", f.ParentId, path, err)
+		}
+		
+		g.AddVertex(parent_f, parent_attrs...)			
+		g.AddEdge(f.String(), parent_f.String())
+
+		
 		for _, other_id := range parent_f.Supersedes {
 				
 			other_f, err := deriveFeature(ctx, parent_r, other_id)
@@ -128,10 +153,12 @@ func main() {
 				return fmt.Errorf("Failed to derive feature for parent supersedes ID (%d) for %s, %w", other_id, path, err)
 			}
 			
-			g.AddVertex(other_f)
+			g.AddVertex(other_f, parent_attrs...)
 			g.AddEdge(parent_f.String(), other_f.String())
 		}
 
+		return nil
+		
 		for _, other_id := range parent_f.SupersededBy {
 
 			other_f, err := deriveFeature(ctx, parent_r, other_id)
@@ -140,7 +167,7 @@ func main() {
 				return fmt.Errorf("Failed to derive feature for parent superseded_by ID (%d) for %s, %w", other_id, path, err)
 			}
 			
-			g.AddVertex(other_f)
+			g.AddVertex(other_f, parent_attrs...)
 			g.AddEdge(other_f.String(), parent_f.String())
 		}
 		
@@ -159,8 +186,50 @@ func main() {
 		log.Fatalf("Failed to iterate source, %v", err)
 	}
 
-	file, _ := os.Create("./mygraph.gv")
-	_ = draw.DOT(g, file)
+	// Dot stuff
+	
+	var buf bytes.Buffer
+	buf_wr := bufio.NewWriter(&buf)
+
+	err = draw.DOT(g, buf_wr)
+	
+	buf_wr.Flush()
+
+	// Graphviz (image) stuff
+	
+	gv := graphviz.New()
+
+	graph, err := graphviz.ParseBytes(buf.Bytes())
+
+	if err != nil {
+		log.Fatalf("Failed to parse graphviz data, %v", err)
+	}
+
+	im, err := gv.RenderImage(graph)
+
+	if err != nil {
+		log.Fatalf("Failed to render graphviz data, %v", err)
+	}
+
+	// Image (on disk) stuff
+	
+	out, err  := os.OpenFile("graph.png", os.O_RDWR|os.O_CREATE, 0644)
+
+	if err != nil {
+		log.Fatalf("Failed to open image file, %v", err)
+	}
+
+	err = png.Encode(out, im)
+
+	if err != nil {
+		log.Fatalf("Failed to encode PNG image, %v", err)
+	}
+
+	err = out.Close()
+
+	if err != nil {
+		log.Fatalf("Failed to close PNG imge, %v", err)
+	}
 }
 
 func deriveFeature(ctx context.Context, r reader.Reader, id int64) (*Feature, error) {

@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/aaronland/go-roster v1.0.0
 	github.com/dominikbraun/graph v0.20.0
+	github.com/goccy/go-graphviz v0.1.1
 	github.com/paulmach/orb v0.8.0
 	github.com/sfomuseum/go-csvdict v1.0.0
 	github.com/sfomuseum/go-flags v0.10.0
@@ -34,12 +35,15 @@ require (
 	github.com/aaronland/go-uid-whosonfirst v0.0.2 // indirect
 	github.com/andres-erbsen/clock v0.0.0-20160526145045-9e14626cd129 // indirect
 	github.com/cenkalti/backoff/v4 v4.1.3 // indirect
+	github.com/fogleman/gg v1.3.0 // indirect
 	github.com/g8rswimmer/error-chain v1.0.0 // indirect
+	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/mmcloughlin/geohash v0.10.0 // indirect
 	github.com/natefinch/atomic v1.0.1 // indirect
 	github.com/paulmach/go.geojson v1.4.0 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 	github.com/sfomuseum/go-edtf v1.1.1 // indirect
 	github.com/sfomuseum/go-sfomuseum-export/v2 v2.3.7 // indirect
 	github.com/sfomuseum/go-sfomuseum-geojson v0.1.3 // indirect
@@ -60,4 +64,5 @@ require (
 	github.com/whosonfirst/walk v0.0.2 // indirect
 	github.com/whosonfirst/warning v0.1.1 // indirect
 	go.uber.org/ratelimit v0.2.0 // indirect
+	golang.org/x/image v0.6.0 // indirect
 )
