@@ -1,19 +1,19 @@
 package main
 
 import (
+	"bufio"
+	"bytes"
 	"context"
 	"flag"
 	"fmt"
+	"image/png"
 	"io"
 	"log"
 	"os"
-	"bytes"
-	"bufio"
-	"image/png"
 
-	"github.com/goccy/go-graphviz"	
 	"github.com/dominikbraun/graph"
 	"github.com/dominikbraun/graph/draw"
+	"github.com/goccy/go-graphviz"
 	"github.com/whosonfirst/go-reader"
 	"github.com/whosonfirst/go-whosonfirst-feature/properties"
 	"github.com/whosonfirst/go-whosonfirst-iterate/v2/iterator"
@@ -22,12 +22,12 @@ import (
 )
 
 type Feature struct {
-	Id int64
-	ParentId int64
-	Name string
-	Inception string
-	Cessation string
-	Supersedes []int64
+	Id           int64
+	ParentId     int64
+	Name         string
+	Inception    string
+	Cessation    string
+	Supersedes   []int64
 	SupersededBy []int64
 }
 
@@ -39,7 +39,7 @@ func main() {
 
 	iterator_uri := flag.String("iterator-uri", "", "...")
 	iterator_source := flag.String("iterator-source", "", "...")
-	
+
 	reader_uri := flag.String("reader-uri", "", "")
 	parent_reader_uri := flag.String("parent-reader-uri", "", "")
 
@@ -77,12 +77,12 @@ func main() {
 		graph.VertexAttribute("color", "grey"),
 		graph.VertexAttribute("decorate", "true"),
 		graph.VertexAttribute("fontsize", "10"),
-		graph.VertexAttribute("linelength", "150"),		
+		graph.VertexAttribute("linelength", "150"),
 		graph.VertexAttribute("margin", ".5"),
 	}
-	
+
 	g := graph.New(featureHash, graph.Directed(), graph.Acyclic())
-	
+
 	iter_cb := func(ctx context.Context, path string, r io.ReadSeeker, args ...interface{}) error {
 
 		id, uri_args, err := uri.ParseURI(path)
@@ -106,17 +106,17 @@ func main() {
 		if err != nil {
 			return fmt.Errorf("Failed to derive feature for %s, %w", path, err)
 		}
-				
+
 		g.AddVertex(f, feature_attrs...)
 
 		for _, other_id := range f.Supersedes {
-				
+
 			other_f, err := deriveFeature(ctx, feature_r, other_id)
 
 			if err != nil {
 				return fmt.Errorf("Failed to derive feature for supersedes ID (%d) for %s, %w", other_id, path, err)
 			}
-			
+
 			g.AddVertex(other_f, feature_attrs...)
 			g.AddEdge(f.String(), other_f.String())
 		}
@@ -128,37 +128,36 @@ func main() {
 			if err != nil {
 				return fmt.Errorf("Failed to derive feature for superseded_by ID (%d) for %s, %w", other_id, path, err)
 			}
-			
+
 			g.AddVertex(other_f, feature_attrs...)
 			g.AddEdge(f.String(), other_f.String())
 		}
 
 		// return nil
-		
+
 		parent_f, err := deriveFeature(ctx, parent_r, f.ParentId)
-		
+
 		if err != nil {
 			return fmt.Errorf("Failed to load parent ID (%d) for %s, %w", f.ParentId, path, err)
 		}
-		
-		g.AddVertex(parent_f, parent_attrs...)			
+
+		g.AddVertex(parent_f, parent_attrs...)
 		g.AddEdge(f.String(), parent_f.String())
 
-		
 		for _, other_id := range parent_f.Supersedes {
-				
+
 			other_f, err := deriveFeature(ctx, parent_r, other_id)
 
 			if err != nil {
 				return fmt.Errorf("Failed to derive feature for parent supersedes ID (%d) for %s, %w", other_id, path, err)
 			}
-			
+
 			g.AddVertex(other_f, parent_attrs...)
 			g.AddEdge(parent_f.String(), other_f.String())
 		}
 
 		return nil
-		
+
 		for _, other_id := range parent_f.SupersededBy {
 
 			other_f, err := deriveFeature(ctx, parent_r, other_id)
@@ -166,11 +165,11 @@ func main() {
 			if err != nil {
 				return fmt.Errorf("Failed to derive feature for parent superseded_by ID (%d) for %s, %w", other_id, path, err)
 			}
-			
+
 			g.AddVertex(other_f, parent_attrs...)
 			g.AddEdge(other_f.String(), parent_f.String())
 		}
-		
+
 		return nil
 	}
 
@@ -187,16 +186,16 @@ func main() {
 	}
 
 	// Dot stuff
-	
+
 	var buf bytes.Buffer
 	buf_wr := bufio.NewWriter(&buf)
 
 	err = draw.DOT(g, buf_wr)
-	
+
 	buf_wr.Flush()
 
 	// Graphviz (image) stuff
-	
+
 	gv := graphviz.New()
 
 	graph, err := graphviz.ParseBytes(buf.Bytes())
@@ -212,8 +211,8 @@ func main() {
 	}
 
 	// Image (on disk) stuff
-	
-	out, err  := os.OpenFile("graph.png", os.O_RDWR|os.O_CREATE, 0644)
+
+	out, err := os.OpenFile("graph.png", os.O_RDWR|os.O_CREATE, 0644)
 
 	if err != nil {
 		log.Fatalf("Failed to open image file, %v", err)
@@ -235,44 +234,43 @@ func main() {
 func deriveFeature(ctx context.Context, r reader.Reader, id int64) (*Feature, error) {
 
 	body, err := wof_reader.LoadBytes(ctx, r, id)
-	
+
 	if err != nil {
 		return nil, fmt.Errorf("Failed to load %d, %w", id, err)
 	}
-	
+
 	return deriveFeatureWithBody(ctx, body, id)
 }
 
 func deriveFeatureWithBody(ctx context.Context, body []byte, id int64) (*Feature, error) {
 
 	name, err := properties.Name(body)
-	
+
 	if err != nil {
 		return nil, fmt.Errorf("Failed to derive name for %d, %w", id, err)
 	}
-	
+
 	parent_id, err := properties.ParentId(body)
-	
+
 	if err != nil {
 		return nil, fmt.Errorf("Failed to derive parent ID for %d, %w", id, err)
 	}
-	
+
 	inception := properties.Inception(body)
 	cessation := properties.Cessation(body)
-	
+
 	supersedes := properties.Supersedes(body)
-	superseded_by := properties.SupersededBy(body)		
-	
+	superseded_by := properties.SupersededBy(body)
+
 	f := &Feature{
-		Id: id,
-		Name: name,
-		ParentId: parent_id,
-		Inception: inception,
-		Cessation: cessation,
-		Supersedes: supersedes,
-		SupersededBy: superseded_by,			
+		Id:           id,
+		Name:         name,
+		ParentId:     parent_id,
+		Inception:    inception,
+		Cessation:    cessation,
+		Supersedes:   supersedes,
+		SupersededBy: superseded_by,
 	}
-	
+
 	return f, nil
 }
-
