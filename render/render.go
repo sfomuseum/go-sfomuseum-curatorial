@@ -67,13 +67,15 @@ func Render(ctx context.Context, opts *RenderOptions) (uint32, []byte, error) {
 			return nil
 		}
 
-		body, err := io.ReadAll(r)
+		/*
+			body, err := io.ReadAll(r)
 
-		if err != nil {
-			return fmt.Errorf("Failed to read %s, %w", path, err)
-		}
+			if err != nil {
+				return fmt.Errorf("Failed to read %s, %w", path, err)
+			}
+		*/
 
-		f, err := deriveFeatureWithBody(ctx, body, id)
+		f, err := deriveFeature(ctx, opts.FeatureReader, opts.ParentReader, id)
 
 		if err != nil {
 			return fmt.Errorf("Failed to derive feature for %s, %w", path, err)
@@ -85,7 +87,7 @@ func Render(ctx context.Context, opts *RenderOptions) (uint32, []byte, error) {
 
 		for _, other_id := range f.Supersedes {
 
-			other_f, err := deriveFeature(ctx, opts.FeatureReader, other_id)
+			other_f, err := deriveFeature(ctx, opts.FeatureReader, opts.ParentReader, other_id)
 
 			if err != nil {
 				log.Printf("Failed to derive feature for supersedes ID (%d) for %s, %w", other_id, path, err)
@@ -98,7 +100,7 @@ func Render(ctx context.Context, opts *RenderOptions) (uint32, []byte, error) {
 
 		for _, other_id := range f.SupersededBy {
 
-			other_f, err := deriveFeature(ctx, opts.FeatureReader, other_id)
+			other_f, err := deriveFeature(ctx, opts.FeatureReader, opts.ParentReader, other_id)
 
 			if err != nil {
 				log.Printf("Failed to derive feature for superseded_by ID (%d) for %s, %w", other_id, path, err)
@@ -117,7 +119,7 @@ func Render(ctx context.Context, opts *RenderOptions) (uint32, []byte, error) {
 
 		// return nil
 
-		parent_f, err := deriveFeature(ctx, opts.ParentReader, f.ParentId)
+		parent_f, err := deriveFeature(ctx, opts.ParentReader, opts.ParentReader, f.ParentId)
 
 		if err != nil {
 			return fmt.Errorf("Failed to load parent ID (%d) for %s, %w", f.ParentId, path, err)
@@ -128,7 +130,7 @@ func Render(ctx context.Context, opts *RenderOptions) (uint32, []byte, error) {
 
 		for _, other_id := range parent_f.Supersedes {
 
-			other_f, err := deriveFeature(ctx, opts.ParentReader, other_id)
+			other_f, err := deriveFeature(ctx, opts.ParentReader, opts.ParentReader, other_id)
 
 			if err != nil {
 				log.Printf("Failed to derive feature for parent supersedes ID (%d) for %s, %w", other_id, path, err)
@@ -143,7 +145,7 @@ func Render(ctx context.Context, opts *RenderOptions) (uint32, []byte, error) {
 
 		for _, other_id := range parent_f.SupersededBy {
 
-			other_f, err := deriveFeature(ctx, opts.ParentReader, other_id)
+			other_f, err := deriveFeature(ctx, opts.ParentReader, opts.ParentReader, other_id)
 
 			if err != nil {
 				log.Printf("Failed to derive feature for parent superseded_by ID (%d) for %s, %w", other_id, path, err)
@@ -214,7 +216,7 @@ func Draw(ctx context.Context, body []byte, wr io.Writer) error {
 	return nil
 }
 
-func deriveFeature(ctx context.Context, r reader.Reader, id int64) (*Feature, error) {
+func deriveFeature(ctx context.Context, r reader.Reader, parent_r reader.Reader, id int64) (*Feature, error) {
 
 	body, err := wof_reader.LoadBytes(ctx, r, id)
 
@@ -222,7 +224,30 @@ func deriveFeature(ctx context.Context, r reader.Reader, id int64) (*Feature, er
 		return nil, fmt.Errorf("Failed to load %d, %w", id, err)
 	}
 
-	return deriveFeatureWithBody(ctx, body, id)
+	f, err := deriveFeatureWithBody(ctx, body, id)
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to derive feature for %d, %w", id, err)
+	}
+
+	if f.ParentId > -1 {
+
+		parent_body, err := wof_reader.LoadBytes(ctx, parent_r, f.ParentId)
+
+		if err != nil {
+			return nil, fmt.Errorf("Failed to load parent record for %d, %w", f.ParentId, err)
+		}
+
+		parent_f, err := deriveFeatureWithBody(ctx, parent_body, f.ParentId)
+
+		if err != nil {
+			return nil, fmt.Errorf("Failed to derive parent feature for %d, %w", f.ParentId, err)
+		}
+
+		f.Parent = parent_f
+	}
+
+	return f, nil
 }
 
 func deriveFeatureWithBody(ctx context.Context, body []byte, id int64) (*Feature, error) {
@@ -241,6 +266,7 @@ func deriveFeatureWithBody(ctx context.Context, body []byte, id int64) (*Feature
 
 	inception := properties.Inception(body)
 	cessation := properties.Cessation(body)
+	deprecated := properties.Deprecated(body)
 
 	supersedes := properties.Supersedes(body)
 	superseded_by := properties.SupersededBy(body)
@@ -251,6 +277,7 @@ func deriveFeatureWithBody(ctx context.Context, body []byte, id int64) (*Feature
 		ParentId:     parent_id,
 		Inception:    inception,
 		Cessation:    cessation,
+		Deprecated:   deprecated,
 		Supersedes:   supersedes,
 		SupersededBy: superseded_by,
 	}

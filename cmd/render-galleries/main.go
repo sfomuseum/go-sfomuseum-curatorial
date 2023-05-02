@@ -19,11 +19,11 @@ import (
 
 func main() {
 
-	iterator_uri := flag.String("iterator-uri", "", "...")
-	iterator_source := flag.String("iterator-source", "", "...")
+	iterator_uri := flag.String("iterator-uri", "repo://?include=properties.sfomuseum:gallery_id=.*&exclude=properties.edtf:deprecated=.*", "...")
+	iterator_source := flag.String("iterator-source", "/usr/local/data/sfomuseum-data-architecture", "...")
 
-	reader_uri := flag.String("reader-uri", "", "")
-	parent_reader_uri := flag.String("parent-reader-uri", "", "")
+	reader_uri := flag.String("reader-uri", "repo:///usr/local/data/sfomuseum-data-architecture", "")
+	parent_reader_uri := flag.String("parent-reader-uri", "repo:///usr/local/data/sfomuseum-data-architecture", "")
 
 	outdir := flag.String("outdir", "/usr/local/data/sfomuseum-data-architecture/sfomuseum/galleries", "...")
 
@@ -118,10 +118,14 @@ func main() {
 
 		log.Println(path)
 
-		_, body, err := render.Render(ctx, opts)
+		count, body, err := render.Render(ctx, opts)
 
 		if err != nil {
 			log.Fatal(err)
+		}
+
+		if count < 2 {
+			continue
 		}
 
 		wr, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE, 0644)

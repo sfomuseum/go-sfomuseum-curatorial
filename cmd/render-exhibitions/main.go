@@ -105,7 +105,7 @@ func main() {
 
 		// END OF need to fix json-query stuff
 
-		exhibition_iterator_uri = fmt.Sprintf("%s&include=properties.sfomuseum:exhibition_id=^%d$", *iterator_uri, exh_id)
+		// exhibition_iterator_uri = fmt.Sprintf("%s&include=properties.sfomuseum:exhibition_id=^%d$", *iterator_uri, exh_id)
 
 		fname := fmt.Sprintf("exhibition-%04d.png", exh_id)
 		path := filepath.Join(abs_root, fname)
