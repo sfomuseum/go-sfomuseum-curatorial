@@ -19,7 +19,7 @@ import (
 
 func main() {
 
-	iterator_uri := flag.String("iterator-uri", "repo://?include=properties.sfomuseum:gallery_id=.*&exclude=properties.edtf:deprecated=.*", "...")
+	iterator_uri := flag.String("iterator-uri", "repo://?include=properties.sfomuseum:gallery_id=.*&x-exclude=properties.edtf:deprecated=.*", "...")
 	iterator_source := flag.String("iterator-source", "/usr/local/data/sfomuseum-data-architecture", "...")
 
 	reader_uri := flag.String("reader-uri", "repo:///usr/local/data/sfomuseum-data-architecture", "")
@@ -90,22 +90,15 @@ func main() {
 
 	for _, gallery_id := range galleries {
 
-		// START OF need to fix json-query stuff
-		// to decode URL parameters
-
 		u, _ := url.Parse(*iterator_uri)
 
 		q := u.Query()
-		q.Set("include", fmt.Sprintf("include=properties.sfomuseum:gallery_id=^%d$", gallery_id))
+		q.Set("include", fmt.Sprintf("properties.sfomuseum:gallery_id=^%d$", gallery_id))
 
 		u.RawQuery = q.Encode()
 
 		gallery_iterator_uri := u.String()
-
-		// END OF need to fix json-query stuff
-
-		gallery_iterator_uri = fmt.Sprintf("%s&include=properties.sfomuseum:gallery_id=^%d$", *iterator_uri, gallery_id)
-
+		
 		fname := fmt.Sprintf("gallery-%03d.png", gallery_id)
 		path := filepath.Join(abs_root, fname)
 

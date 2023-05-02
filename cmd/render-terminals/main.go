@@ -90,9 +90,6 @@ func main() {
 
 	for _, terminal_id := range terminals {
 
-		// START OF need to fix json-query stuff
-		// to decode URL parameters
-
 		u, _ := url.Parse(*iterator_uri)
 
 		q := u.Query()
@@ -101,10 +98,6 @@ func main() {
 		u.RawQuery = q.Encode()
 
 		terminal_iterator_uri := u.String()
-
-		// END OF need to fix json-query stuff
-
-		terminal_iterator_uri = fmt.Sprintf("%s&include=properties.sfomuseum:terminal_id=^%s$", *iterator_uri, terminal_id)
 
 		fname := fmt.Sprintf("terminal-%s.png", terminal_id)
 		path := filepath.Join(abs_root, fname)

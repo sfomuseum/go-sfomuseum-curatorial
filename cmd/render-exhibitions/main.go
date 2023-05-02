@@ -91,9 +91,6 @@ func main() {
 
 	for _, exh_id := range exhibitions {
 
-		// START OF need to fix json-query stuff
-		// to decode URL parameters
-
 		u, _ := url.Parse(*iterator_uri)
 
 		q := u.Query()
@@ -102,10 +99,6 @@ func main() {
 		u.RawQuery = q.Encode()
 
 		exhibition_iterator_uri := u.String()
-
-		// END OF need to fix json-query stuff
-
-		// exhibition_iterator_uri = fmt.Sprintf("%s&include=properties.sfomuseum:exhibition_id=^%d$", *iterator_uri, exh_id)
 
 		fname := fmt.Sprintf("exhibition-%04d.png", exh_id)
 		path := filepath.Join(abs_root, fname)

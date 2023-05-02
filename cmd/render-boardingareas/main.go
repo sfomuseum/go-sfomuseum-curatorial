@@ -90,9 +90,6 @@ func main() {
 
 	for _, boardingarea_id := range boardingareas {
 
-		// START OF need to fix json-query stuff
-		// to decode URL parameters
-
 		u, _ := url.Parse(*iterator_uri)
 
 		q := u.Query()
@@ -101,10 +98,6 @@ func main() {
 		u.RawQuery = q.Encode()
 
 		boardingarea_iterator_uri := u.String()
-
-		// END OF need to fix json-query stuff
-
-		boardingarea_iterator_uri = fmt.Sprintf("%s&include=properties.sfomuseum:boardingarea_id=^%s$", *iterator_uri, boardingarea_id)
 
 		fname := fmt.Sprintf("boardingarea-%s.png", boardingarea_id)
 		path := filepath.Join(abs_root, fname)
