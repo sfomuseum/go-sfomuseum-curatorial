@@ -94,7 +94,7 @@ func main() {
 		u, _ := url.Parse(*iterator_uri)
 
 		q := u.Query()
-		q.Set("include", fmt.Sprintf("include=properties.sfomuseum:exhibition_id=^%d$", exh_id))
+		q.Set("include", fmt.Sprintf("properties.sfomuseum:exhibition_id=^%d$", exh_id))
 
 		u.RawQuery = q.Encode()
 

@@ -19,7 +19,7 @@ import (
 
 func main() {
 
-	iterator_uri := flag.String("iterator-uri", "repo://?include=properties.sfomuseum:gallery_id=.*&x-exclude=properties.edtf:deprecated=.*", "...")
+	iterator_uri := flag.String("iterator-uri", "repo://?include=properties.sfomuseum:gallery_id=.*&exclude=properties.edtf:deprecated=.*", "...")
 	iterator_source := flag.String("iterator-source", "/usr/local/data/sfomuseum-data-architecture", "...")
 
 	reader_uri := flag.String("reader-uri", "repo:///usr/local/data/sfomuseum-data-architecture", "")
