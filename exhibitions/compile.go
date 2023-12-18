@@ -69,6 +69,12 @@ func CompileExhibitionsData(ctx context.Context, iterator_uri string, iterator_s
 			IsCurrent:     is_current.Flag(),
 		}
 
+		www_rsp := gjson.GetBytes(body, "properties.sfomuseum_www:exhibition_id")
+
+		if www_rsp.Exists(){
+			w.SFOMuseumWWWId = www_rsp.Int()
+		}
+		
 		mu.Lock()
 		lookup = append(lookup, w)
 		mu.Unlock()

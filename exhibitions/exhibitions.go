@@ -10,7 +10,8 @@ import (
 type Exhibition struct {
 	WhosOnFirstId int64  `json:"wof:id"`
 	Name          string `json:"wof:name"`
-	SFOMuseumId   int64  `json:"sfomuseum:object_id"`
+	SFOMuseumId   int64  `json:"sfomuseum:exhibition_id"`
+	SFOMuseumWWWId int64 `json:"sfomuseum_www:exhibition_id"`
 	IsCurrent     int64  `json:"mz:is_current"`
 
 	// To do: is current stuff
@@ -18,7 +19,7 @@ type Exhibition struct {
 }
 
 func (w *Exhibition) String() string {
-	return fmt.Sprintf("%d %s", w.WhosOnFirstId, w.Name)
+	return fmt.Sprintf("%d %s FM: %d WWW: %d", w.WhosOnFirstId, w.Name, w.SFOMuseumId, w.SFOMuseumWWWId)
 }
 
 // Return the current Exhibition matching 'code'. Multiple matches throw an error.
