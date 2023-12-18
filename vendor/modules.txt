@@ -1,12 +1,15 @@
 # github.com/aaronland/go-artisanal-integers v0.9.1
 ## explicit; go 1.16
 github.com/aaronland/go-artisanal-integers/client
-# github.com/aaronland/go-brooklynintegers-api v1.2.6
-## explicit; go 1.16
+# github.com/aaronland/go-brooklynintegers-api v1.2.7
+## explicit; go 1.18
 github.com/aaronland/go-brooklynintegers-api
-# github.com/aaronland/go-json-query v0.1.3
+# github.com/aaronland/go-json-query v0.1.4
 ## explicit; go 1.18
 github.com/aaronland/go-json-query
+# github.com/aaronland/go-log/v2 v2.0.0
+## explicit; go 1.18
+github.com/aaronland/go-log/v2
 # github.com/aaronland/go-pool/v2 v2.0.0
 ## explicit; go 1.18
 github.com/aaronland/go-pool/v2
@@ -16,24 +19,28 @@ github.com/aaronland/go-roster
 # github.com/aaronland/go-string v1.0.0
 ## explicit; go 1.16
 github.com/aaronland/go-string/random
-# github.com/aaronland/go-uid v0.3.0
+# github.com/aaronland/go-uid v0.4.0
 ## explicit; go 1.18
 github.com/aaronland/go-uid
-# github.com/aaronland/go-uid-artisanal v0.0.2
+# github.com/aaronland/go-uid-artisanal v0.0.4
 ## explicit; go 1.18
 github.com/aaronland/go-uid-artisanal
-# github.com/aaronland/go-uid-proxy v0.0.2
+# github.com/aaronland/go-uid-proxy v0.1.1
 ## explicit; go 1.18
 github.com/aaronland/go-uid-proxy
-# github.com/aaronland/go-uid-whosonfirst v0.0.2
+# github.com/aaronland/go-uid-whosonfirst v0.0.4
 ## explicit; go 1.18
 github.com/aaronland/go-uid-whosonfirst
-# github.com/andres-erbsen/clock v0.0.0-20160526145045-9e14626cd129
-## explicit
-github.com/andres-erbsen/clock
-# github.com/cenkalti/backoff/v4 v4.1.3
-## explicit; go 1.13
+# github.com/benbjohnson/clock v1.3.0
+## explicit; go 1.15
+github.com/benbjohnson/clock
+# github.com/cenkalti/backoff/v4 v4.2.1
+## explicit; go 1.18
 github.com/cenkalti/backoff/v4
+# github.com/dominikbraun/graph v0.16.1
+## explicit; go 1.18
+github.com/dominikbraun/graph
+github.com/dominikbraun/graph/draw
 # github.com/g8rswimmer/error-chain v1.0.0
 ## explicit
 github.com/g8rswimmer/error-chain
@@ -52,7 +59,7 @@ github.com/natefinch/atomic
 # github.com/paulmach/go.geojson v1.4.0
 ## explicit
 github.com/paulmach/go.geojson
-# github.com/paulmach/orb v0.8.0
+# github.com/paulmach/orb v0.10.0
 ## explicit; go 1.15
 github.com/paulmach/orb
 github.com/paulmach/orb/encoding/wkt
@@ -76,8 +83,8 @@ github.com/sfomuseum/go-edtf/tests
 # github.com/sfomuseum/go-flags v0.10.0
 ## explicit; go 1.16
 github.com/sfomuseum/go-flags/multi
-# github.com/sfomuseum/go-sfomuseum-export/v2 v2.3.7
-## explicit; go 1.16
+# github.com/sfomuseum/go-sfomuseum-export/v2 v2.3.8
+## explicit; go 1.18
 github.com/sfomuseum/go-sfomuseum-export/v2
 github.com/sfomuseum/go-sfomuseum-export/v2/properties
 # github.com/sfomuseum/go-sfomuseum-feature v1.2.0
@@ -89,13 +96,13 @@ github.com/sfomuseum/go-sfomuseum-geojson/feature
 # github.com/sfomuseum/go-sfomuseum-reader v0.0.2
 ## explicit; go 1.12
 github.com/sfomuseum/go-sfomuseum-reader
-# github.com/sfomuseum/go-sfomuseum-writer/v3 v3.0.0
-## explicit; go 1.18
+# github.com/sfomuseum/go-sfomuseum-writer/v3 v3.0.2
+## explicit; go 1.21
 github.com/sfomuseum/go-sfomuseum-writer/v3
 # github.com/skelterjohn/geom v0.0.0-20180103142417-96f3e8a219c5
 ## explicit
 github.com/skelterjohn/geom
-# github.com/tidwall/gjson v1.14.4
+# github.com/tidwall/gjson v1.17.0
 ## explicit; go 1.12
 github.com/tidwall/gjson
 # github.com/tidwall/match v1.1.1
@@ -116,17 +123,17 @@ github.com/whosonfirst/go-reader
 # github.com/whosonfirst/go-whosonfirst-crawl v0.2.2
 ## explicit; go 1.18
 github.com/whosonfirst/go-whosonfirst-crawl
-# github.com/whosonfirst/go-whosonfirst-export/v2 v2.7.0
+# github.com/whosonfirst/go-whosonfirst-export/v2 v2.7.1
 ## explicit; go 1.18
 github.com/whosonfirst/go-whosonfirst-export/v2
 github.com/whosonfirst/go-whosonfirst-export/v2/properties
-# github.com/whosonfirst/go-whosonfirst-feature v0.0.26
+# github.com/whosonfirst/go-whosonfirst-feature v0.0.27
 ## explicit; go 1.18
 github.com/whosonfirst/go-whosonfirst-feature/alt
 github.com/whosonfirst/go-whosonfirst-feature/geometry
 github.com/whosonfirst/go-whosonfirst-feature/properties
-# github.com/whosonfirst/go-whosonfirst-flags v0.4.4
-## explicit; go 1.16
+# github.com/whosonfirst/go-whosonfirst-flags v0.5.1
+## explicit; go 1.18
 github.com/whosonfirst/go-whosonfirst-flags
 github.com/whosonfirst/go-whosonfirst-flags/existential
 # github.com/whosonfirst/go-whosonfirst-format v0.4.1
@@ -143,18 +150,17 @@ github.com/whosonfirst/go-whosonfirst-geojson-v2/utils
 # github.com/whosonfirst/go-whosonfirst-hash v0.1.0
 ## explicit; go 1.12
 github.com/whosonfirst/go-whosonfirst-hash
-# github.com/whosonfirst/go-whosonfirst-id v1.2.0
+# github.com/whosonfirst/go-whosonfirst-id v1.2.2
 ## explicit; go 1.18
 github.com/whosonfirst/go-whosonfirst-id
-# github.com/whosonfirst/go-whosonfirst-iterate/v2 v2.3.2
+# github.com/whosonfirst/go-whosonfirst-iterate/v2 v2.3.4
 ## explicit; go 1.18
 github.com/whosonfirst/go-whosonfirst-iterate/v2/emitter
 github.com/whosonfirst/go-whosonfirst-iterate/v2/filters
 github.com/whosonfirst/go-whosonfirst-iterate/v2/iterator
-# github.com/whosonfirst/go-whosonfirst-placetypes v0.3.0
-## explicit; go 1.12
+# github.com/whosonfirst/go-whosonfirst-placetypes v0.7.0
+## explicit; go 1.18
 github.com/whosonfirst/go-whosonfirst-placetypes
-github.com/whosonfirst/go-whosonfirst-placetypes/placetypes
 # github.com/whosonfirst/go-whosonfirst-sources v0.1.0
 ## explicit; go 1.12
 github.com/whosonfirst/go-whosonfirst-sources
@@ -165,7 +171,7 @@ github.com/whosonfirst/go-whosonfirst-spr/v2
 # github.com/whosonfirst/go-whosonfirst-uri v1.3.0
 ## explicit; go 1.13
 github.com/whosonfirst/go-whosonfirst-uri
-# github.com/whosonfirst/go-whosonfirst-writer/v3 v3.0.0
+# github.com/whosonfirst/go-whosonfirst-writer/v3 v3.1.0
 ## explicit; go 1.18
 github.com/whosonfirst/go-whosonfirst-writer/v3
 # github.com/whosonfirst/go-writer/v3 v3.1.0
@@ -177,6 +183,15 @@ github.com/whosonfirst/walk
 # github.com/whosonfirst/warning v0.1.1
 ## explicit; go 1.12
 github.com/whosonfirst/warning
-# go.uber.org/ratelimit v0.2.0
-## explicit; go 1.14
+# go.mongodb.org/mongo-driver v1.11.4
+## explicit; go 1.13
+go.mongodb.org/mongo-driver/bson
+go.mongodb.org/mongo-driver/bson/bsoncodec
+go.mongodb.org/mongo-driver/bson/bsonoptions
+go.mongodb.org/mongo-driver/bson/bsonrw
+go.mongodb.org/mongo-driver/bson/bsontype
+go.mongodb.org/mongo-driver/bson/primitive
+go.mongodb.org/mongo-driver/x/bsonx/bsoncore
+# go.uber.org/ratelimit v0.3.0
+## explicit; go 1.18
 go.uber.org/ratelimit
