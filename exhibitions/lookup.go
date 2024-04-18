@@ -209,16 +209,20 @@ func appendData(ctx context.Context, table *sync.Map, data *Exhibition) error {
 
 	str_wofid := strconv.FormatInt(data.WhosOnFirstId, 10)
 	str_sfomid := strconv.FormatInt(data.SFOMuseumId, 10)
-	str_wwwid := strconv.FormatInt(data.SFOMuseumWWWId, 10)
+
 	
 	possible_codes := []string{
 		str_wofid,
 		str_sfomid,
 		fmt.Sprintf("wof:id=%s", str_wofid),
 		fmt.Sprintf("sfomuseum:exhibition_id=%s", str_sfomid),
-		fmt.Sprintf("sfomuseum_www:exhibition_id=%s", str_wwwid),		
 	}
 
+	if data.SFOMuseumWWWId != 0 {
+		str_wwwid := strconv.FormatInt(data.SFOMuseumWWWId, 10)
+		possible_codes = append(possible_codes, fmt.Sprintf("sfomuseum_www:exhibition_id=%s", str_wwwid))
+	}
+	
 	for _, code := range possible_codes {
 
 		if code == "" {

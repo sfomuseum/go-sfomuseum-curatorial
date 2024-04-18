@@ -1,25 +1,25 @@
 module github.com/sfomuseum/go-sfomuseum-curatorial
 
-go 1.21
+go 1.22.1
 
-toolchain go1.21.5
+toolchain go1.22.2
 
 require (
 	github.com/aaronland/go-roster v1.0.0
-	github.com/paulmach/orb v0.10.0
+	github.com/paulmach/orb v0.11.1
 	github.com/sfomuseum/go-csvdict v1.0.0
 	github.com/sfomuseum/go-flags v0.10.0
 	github.com/sfomuseum/go-sfomuseum-feature v1.2.0
 	github.com/sfomuseum/go-sfomuseum-reader v0.0.2
 	github.com/sfomuseum/go-sfomuseum-writer/v3 v3.0.2
-	github.com/tidwall/gjson v1.17.0
+	github.com/tidwall/gjson v1.17.1
 	github.com/whosonfirst/go-reader v1.0.2
 	github.com/whosonfirst/go-whosonfirst-export/v2 v2.7.1
 	github.com/whosonfirst/go-whosonfirst-feature v0.0.27
 	github.com/whosonfirst/go-whosonfirst-id v1.2.2
-	github.com/whosonfirst/go-whosonfirst-iterate/v2 v2.3.4
+	github.com/whosonfirst/go-whosonfirst-iterate/v2 v2.4.1
 	github.com/whosonfirst/go-whosonfirst-uri v1.3.0
-	github.com/whosonfirst/go-writer/v3 v3.1.0
+	github.com/whosonfirst/go-writer/v3 v3.1.1
 )
 
 require (
