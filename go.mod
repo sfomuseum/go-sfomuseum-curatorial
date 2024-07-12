@@ -2,8 +2,6 @@ module github.com/sfomuseum/go-sfomuseum-curatorial
 
 go 1.22.1
 
-toolchain go1.22.2
-
 require (
 	github.com/aaronland/go-roster v1.0.0
 	github.com/paulmach/orb v0.11.1
@@ -11,10 +9,10 @@ require (
 	github.com/sfomuseum/go-flags v0.10.0
 	github.com/sfomuseum/go-sfomuseum-feature v1.2.0
 	github.com/sfomuseum/go-sfomuseum-reader v0.0.2
-	github.com/sfomuseum/go-sfomuseum-writer/v3 v3.0.2
+	github.com/sfomuseum/go-sfomuseum-writer/v3 v3.0.3
 	github.com/tidwall/gjson v1.17.1
 	github.com/whosonfirst/go-reader v1.0.2
-	github.com/whosonfirst/go-whosonfirst-export/v2 v2.7.1
+	github.com/whosonfirst/go-whosonfirst-export/v2 v2.8.1
 	github.com/whosonfirst/go-whosonfirst-feature v0.0.27
 	github.com/whosonfirst/go-whosonfirst-id v1.2.2
 	github.com/whosonfirst/go-whosonfirst-iterate/v2 v2.4.1
@@ -43,7 +41,7 @@ require (
 	github.com/natefinch/atomic v1.0.1 // indirect
 	github.com/paulmach/go.geojson v1.4.0 // indirect
 	github.com/sfomuseum/go-edtf v1.1.1 // indirect
-	github.com/sfomuseum/go-sfomuseum-export/v2 v2.3.8 // indirect
+	github.com/sfomuseum/go-sfomuseum-export/v2 v2.3.11 // indirect
 	github.com/sfomuseum/go-sfomuseum-geojson v0.1.3 // indirect
 	github.com/skelterjohn/geom v0.0.0-20180103142417-96f3e8a219c5 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
@@ -58,7 +56,7 @@ require (
 	github.com/whosonfirst/go-whosonfirst-placetypes v0.7.0 // indirect
 	github.com/whosonfirst/go-whosonfirst-sources v0.1.0 // indirect
 	github.com/whosonfirst/go-whosonfirst-spr/v2 v2.0.0 // indirect
-	github.com/whosonfirst/go-whosonfirst-writer/v3 v3.1.0 // indirect
+	github.com/whosonfirst/go-whosonfirst-writer/v3 v3.1.3 // indirect
 	github.com/whosonfirst/walk v0.0.2 // indirect
 	github.com/whosonfirst/warning v0.1.1 // indirect
 	go.mongodb.org/mongo-driver v1.11.4 // indirect
