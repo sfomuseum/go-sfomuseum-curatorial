@@ -177,9 +177,61 @@ func FindAllGalleriesForDateWithLookup(ctx context.Context, lookup architecture.
 			continue
 		}
 
-		slog.Debug("Gallery DOES match date conditions", "code", code, "date", date, "gallery", g.Name, "inception", inception, "cessation", cessation)
+		slog.Debug("Gallery DOES match date conditions", "code", code, "date", date, "gallery id", g.WhosOnFirstId, "gallery", g.Name, "inception", inception, "cessation", cessation)
 		galleries = append(galleries, g)
-		break
+	}
+
+	if len(galleries) > 1 {
+
+		/*
+
+			Given the following scenario:
+
+			2024/07/26 15:50:27 DEBUG Gallery DOES match date conditions code=42 date=2024-06-17 "gallery id"=1914589529 gallery="AML 06 AML Photography" inception=2021-11-09 cessation=2024-06-17
+			2024/07/26 15:50:27 DEBUG Gallery DOES match date conditions code=42 date=2024-06-17 "gallery id"=1914601189 gallery="AML 06 AML Photography" inception=2024-06-17 cessation=..
+
+			Where, by virtue of 2024-06-17 being "between" the end date of one gallery and the start date of another, then
+			filter out matches that are not considered to be "current".
+
+		*/
+
+		current_galleries := make([]*Gallery, 0)
+
+		for _, g := range galleries {
+
+			if g.IsCurrent == 1 {
+				current_galleries = append(current_galleries, g)
+			}
+		}
+
+		if len(current_galleries) > 0 {
+			galleries = current_galleries
+		} else {
+
+			/*
+
+				But wait, there's more. What if the same situation exists (matching inception/cessation dates) but
+				none of the candidate galleries are "current" ? In that situation give precedence to records whose
+				inception date matches the date being queried against.
+
+				2024/07/26 16:07:56 DEBUG Gallery DOES match date conditions code=3 date=2021-11-09 "gallery id"=1745882483 gallery="3E Gate 76" inception=2021-05-25 cessation=2021-11-09
+				2024/07/26 16:07:56 DEBUG Gallery DOES match date conditions code=3 date=2021-11-09 "gallery id"=1763588523 gallery="F-03 Gate 76" inception=2021-11-09 cessation=2024-06-17
+
+			*/
+
+			starting_galleries := make([]*Gallery, 0)
+
+			for _, g := range galleries {
+
+				if g.Inception == date {
+					starting_galleries = append(starting_galleries, g)
+				}
+			}
+
+			if len(starting_galleries) > 0 {
+				galleries = starting_galleries
+			}
+		}
 	}
 
 	slog.Debug("Return galleries", "code", code, "date", date, "count", len(galleries))

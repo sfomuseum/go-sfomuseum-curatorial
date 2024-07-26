@@ -1,5 +1,12 @@
 package main
 
+// This tool attempts to derive the most appropriate gallery for an exhibition
+// based on an exhibition's (sfo museum) gallery ID and the edtf:inception date
+// for that exhibition's WOF feature. The tool works mostly (I think) but there
+// are still many instances where it can't resolve mulitple galleries where all
+// the candidates overlap a given date but are "fuzzy" EDTF dates so it's not
+// possible to filter things.
+
 import (
 	"context"
 	"crypto/sha256"
