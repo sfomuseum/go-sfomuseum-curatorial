@@ -8,11 +8,11 @@ import (
 )
 
 type Exhibition struct {
-	WhosOnFirstId int64  `json:"wof:id"`
-	Name          string `json:"wof:name"`
-	SFOMuseumId   int64  `json:"sfomuseum:exhibition_id"`
-	SFOMuseumWWWId int64 `json:"sfomuseum_www:exhibition_id"`
-	IsCurrent     int64  `json:"mz:is_current"`
+	WhosOnFirstId  int64  `json:"wof:id"`
+	Name           string `json:"wof:name"`
+	SFOMuseumId    int64  `json:"sfomuseum:exhibition_id"`
+	SFOMuseumWWWId int64  `json:"sfomuseum_www:exhibition_id"`
+	IsCurrent      int64  `json:"mz:is_current"`
 
 	// To do: is current stuff
 	// To do (maybe): galleries
