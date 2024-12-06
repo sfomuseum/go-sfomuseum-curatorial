@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io"
-	_ "log"
+	_ "log/slog"
 	"sync"
 
 	"github.com/tidwall/gjson"
@@ -51,6 +51,8 @@ func CompilePublicArtWorksData(ctx context.Context, iterator_uri string, iterato
 		}
 
 		if !sfomid_rsp.Exists() {
+			// slog.Warn("Record is missing sfomuseum:obhect_id property, skipping", "path", path)
+			// return nil
 			return fmt.Errorf("'%s' is missing sfomuseum:obhect_id property", path)
 		}
 

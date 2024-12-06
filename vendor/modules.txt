@@ -4,8 +4,8 @@ github.com/aaronland/go-artisanal-integers/client
 # github.com/aaronland/go-brooklynintegers-api v1.2.7
 ## explicit; go 1.18
 github.com/aaronland/go-brooklynintegers-api
-# github.com/aaronland/go-json-query v0.1.4
-## explicit; go 1.18
+# github.com/aaronland/go-json-query v0.1.5
+## explicit; go 1.22
 github.com/aaronland/go-json-query
 # github.com/aaronland/go-pool/v2 v2.0.0
 ## explicit; go 1.18
@@ -22,7 +22,7 @@ github.com/aaronland/go-uid
 # github.com/aaronland/go-uid-artisanal v0.0.4
 ## explicit; go 1.18
 github.com/aaronland/go-uid-artisanal
-# github.com/aaronland/go-uid-proxy v0.2.0
+# github.com/aaronland/go-uid-proxy v0.3.0
 ## explicit; go 1.22
 github.com/aaronland/go-uid-proxy
 # github.com/aaronland/go-uid-whosonfirst v0.0.5
@@ -81,8 +81,8 @@ github.com/sfomuseum/go-edtf/tests
 # github.com/sfomuseum/go-flags v0.10.0
 ## explicit; go 1.16
 github.com/sfomuseum/go-flags/multi
-# github.com/sfomuseum/go-sfomuseum-architecture v0.8.2
-## explicit; go 1.22.4
+# github.com/sfomuseum/go-sfomuseum-architecture v0.8.3
+## explicit; go 1.23
 github.com/sfomuseum/go-sfomuseum-architecture
 github.com/sfomuseum/go-sfomuseum-architecture/data
 github.com/sfomuseum/go-sfomuseum-architecture/galleries
@@ -105,7 +105,7 @@ github.com/sfomuseum/go-sfomuseum-writer/v3
 # github.com/skelterjohn/geom v0.0.0-20180103142417-96f3e8a219c5
 ## explicit
 github.com/skelterjohn/geom
-# github.com/tidwall/gjson v1.17.1
+# github.com/tidwall/gjson v1.18.0
 ## explicit; go 1.12
 github.com/tidwall/gjson
 # github.com/tidwall/match v1.1.1
@@ -126,13 +126,15 @@ github.com/whosonfirst/go-reader
 # github.com/whosonfirst/go-whosonfirst-crawl v0.2.2
 ## explicit; go 1.18
 github.com/whosonfirst/go-whosonfirst-crawl
-# github.com/whosonfirst/go-whosonfirst-export/v2 v2.8.1
+# github.com/whosonfirst/go-whosonfirst-export/v2 v2.8.3
 ## explicit; go 1.22
 github.com/whosonfirst/go-whosonfirst-export/v2
 github.com/whosonfirst/go-whosonfirst-export/v2/properties
-# github.com/whosonfirst/go-whosonfirst-feature v0.0.27
-## explicit; go 1.18
+# github.com/whosonfirst/go-whosonfirst-feature v0.0.28
+## explicit; go 1.22
+github.com/whosonfirst/go-whosonfirst-feature
 github.com/whosonfirst/go-whosonfirst-feature/alt
+github.com/whosonfirst/go-whosonfirst-feature/constants
 github.com/whosonfirst/go-whosonfirst-feature/geometry
 github.com/whosonfirst/go-whosonfirst-feature/properties
 # github.com/whosonfirst/go-whosonfirst-flags v0.5.1
@@ -153,11 +155,11 @@ github.com/whosonfirst/go-whosonfirst-geojson-v2/utils
 # github.com/whosonfirst/go-whosonfirst-hash v0.1.0
 ## explicit; go 1.12
 github.com/whosonfirst/go-whosonfirst-hash
-# github.com/whosonfirst/go-whosonfirst-id v1.2.3
+# github.com/whosonfirst/go-whosonfirst-id v1.2.5
 ## explicit; go 1.22
 github.com/whosonfirst/go-whosonfirst-id
-# github.com/whosonfirst/go-whosonfirst-iterate/v2 v2.4.1
-## explicit; go 1.18
+# github.com/whosonfirst/go-whosonfirst-iterate/v2 v2.5.0
+## explicit; go 1.22
 github.com/whosonfirst/go-whosonfirst-iterate/v2/emitter
 github.com/whosonfirst/go-whosonfirst-iterate/v2/filters
 github.com/whosonfirst/go-whosonfirst-iterate/v2/iterator
