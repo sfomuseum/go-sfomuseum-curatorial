@@ -13,7 +13,7 @@ import (
 	"sync"
 
 	"github.com/paulmach/orb/encoding/wkt"
-	"github.com/sfomuseum/go-csvdict"
+	"github.com/sfomuseum/go-csvdict/v2"
 	sfom_properties "github.com/sfomuseum/go-sfomuseum-feature/properties"
 	"github.com/tidwall/gjson"
 	"github.com/whosonfirst/go-whosonfirst-feature/geometry"
@@ -110,19 +110,11 @@ func main() {
 
 			if csv_wr == nil {
 
-				fieldnames := make([]string, 0)
-
-				for k, _ := range out {
-					fieldnames = append(fieldnames, k)
-				}
-
-				w, err := csvdict.NewWriter(wr, fieldnames)
+				w, err := csvdict.NewWriter(wr)
 
 				if err != nil {
 					return fmt.Errorf("Failed to create CSV writer, %w", err)
 				}
-
-				w.WriteHeader()
 
 				csv_wr = w
 			}
