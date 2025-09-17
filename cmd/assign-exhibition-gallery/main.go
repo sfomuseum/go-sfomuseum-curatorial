@@ -8,11 +8,11 @@ import (
 	"log"
 
 	"github.com/sfomuseum/go-flags/multi"
-	sfom_reader "github.com/sfomuseum/go-sfomuseum-reader"
+	wof_reader "github.com/whosonfirst/go-whosonfirst-reader/v2"
 	sfom_writer "github.com/sfomuseum/go-sfomuseum-writer/v3"
 	"github.com/tidwall/gjson"
-	"github.com/whosonfirst/go-reader"
-	"github.com/whosonfirst/go-whosonfirst-export/v2"
+	"github.com/whosonfirst/go-reader/v2"
+	"github.com/whosonfirst/go-whosonfirst-export/v3"
 	"github.com/whosonfirst/go-whosonfirst-feature/properties"
 	"github.com/whosonfirst/go-writer/v3"
 )
@@ -53,7 +53,7 @@ func main() {
 		log.Fatalf("Failed to create exhibitions writer, %v", err)
 	}
 
-	exh_f, err := sfom_reader.LoadBytesFromID(ctx, exh_r, *exhibition_id)
+	exh_f, err := wof_reader.LoadBytes(ctx, exh_r, *exhibition_id)
 
 	if err != nil {
 		log.Fatalf("Failed to load exhibition record, %v", err)
@@ -63,7 +63,7 @@ func main() {
 
 	for idx, gal_id := range gallery_ids {
 
-		gal_f, err := sfom_reader.LoadBytesFromID(ctx, arch_r, gal_id)
+		gal_f, err := wof_reader.LoadBytes(ctx, arch_r, gal_id)
 
 		if err != nil {
 			log.Fatalf("Failed to load gallery record %d, %v", gal_id, err)

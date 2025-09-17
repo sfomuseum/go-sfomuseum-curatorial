@@ -5,72 +5,82 @@ import (
 	"fmt"
 	"io"
 	_ "log"
-	"sync"
 
 	"github.com/tidwall/gjson"
 	"github.com/whosonfirst/go-whosonfirst-feature/properties"
-	"github.com/whosonfirst/go-whosonfirst-iterate/v2/iterator"
+	"github.com/whosonfirst/go-whosonfirst-iterate/v3"
 	"github.com/whosonfirst/go-whosonfirst-uri"
 )
 
 func CompileCollectionData(ctx context.Context, iterator_uri string, iterator_sources ...string) ([]*Object, error) {
 
 	lookup := make([]*Object, 0)
-	mu := new(sync.RWMutex)
 
-	iter_cb := func(ctx context.Context, path string, fh io.ReadSeeker, args ...interface{}) error {
+	iter, err := iterate.NewIterator(ctx, iterator_uri)
 
+	if err != nil {
+		return nil, fmt.Errorf("Failed to create iterator, %w", err)
+	}
+
+	for rec, err := range iter.Iterate(ctx, iterator_sources...) {
+		
+		if err != nil {
+			return nil, fmt.Errorf("Failed to iterate sources, %w", err)
+		}
+
+		defer rec.Body.Close()
+		
 		select {
 		case <-ctx.Done():
-			return nil
+			break
 		default:
 			// pass
 		}
 
-		_, uri_args, err := uri.ParseURI(path)
+		_, uri_args, err := uri.ParseURI(rec.Path)
 
 		if err != nil {
-			return fmt.Errorf("Failed to parse %s, %w", path, err)
+			return nil, fmt.Errorf("Failed to parse %s, %w", rec.Path, err)
 		}
 
 		if uri_args.IsAlternate {
-			return nil
+			continue
 		}
 
-		body, err := io.ReadAll(fh)
+		body, err := io.ReadAll(rec.Body)
 
 		if err != nil {
-			return fmt.Errorf("Failed to read '%s', %w", path, err)
+			return nil, fmt.Errorf("Failed to read '%s', %w", rec.Path, err)
 		}
 
 		wof_id, err := properties.Id(body)
 
 		if err != nil {
-			return fmt.Errorf("Failed to derive wof:id for %s, %w", path, err)
+			return nil, fmt.Errorf("Failed to derive wof:id for %s, %w", rec.Path, err)
 		}
 
 		wof_name, err := properties.Name(body)
 
 		if err != nil {
-			return fmt.Errorf("Failed to derive wof:name for %s, %w", path, err)
+			return nil, fmt.Errorf("Failed to derive wof:name for %s, %w", rec.Path, err)
 		}
 
 		is_current, err := properties.IsCurrent(body)
 
 		if err != nil {
-			return fmt.Errorf("Failed to derive is current for %s, %w", path, err)
+			return nil, fmt.Errorf("Failed to derive is current for %s, %w", rec.Path, err)
 		}
 
 		sfomid_rsp := gjson.GetBytes(body, "properties.sfomuseum:object_id")
 
 		if !sfomid_rsp.Exists() {
-			return fmt.Errorf("'%s' is missing sfomuseum:object_id property", path)
+			return nil, fmt.Errorf("'%s' is missing sfomuseum:object_id property", rec.Path)
 		}
 
 		accno_rsp := gjson.GetBytes(body, "properties.sfomuseum:accession_number")
 
 		if !sfomid_rsp.Exists() {
-			return fmt.Errorf("'%s' is missing sfomuseum:accession_number property", path)
+			return nil, fmt.Errorf("'%s' is missing sfomuseum:accession_number property", rec.Path)
 		}
 
 		w := &Object{
@@ -87,23 +97,7 @@ func CompileCollectionData(ctx context.Context, iterator_uri string, iterator_so
 			w.CallNumber = callno_rsp.String()
 		}
 
-		mu.Lock()
 		lookup = append(lookup, w)
-		mu.Unlock()
-
-		return nil
-	}
-
-	iter, err := iterator.NewIterator(ctx, iterator_uri, iter_cb)
-
-	if err != nil {
-		return nil, fmt.Errorf("Failed to create iterator, %w", err)
-	}
-
-	err = iter.IterateURIs(ctx, iterator_sources...)
-
-	if err != nil {
-		return nil, fmt.Errorf("Failed to iterate sources, %w", err)
 	}
 
 	return lookup, nil
