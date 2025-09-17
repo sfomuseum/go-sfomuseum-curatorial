@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"log"
 
-	sfom_reader "github.com/sfomuseum/go-sfomuseum-reader"
+	wof_reader "github.com/whosonfirst/go-whosonfirst-reader/v2"
 	sfom_writer "github.com/sfomuseum/go-sfomuseum-writer/v3"
 	"github.com/tidwall/gjson"
-	"github.com/whosonfirst/go-reader"
-	"github.com/whosonfirst/go-whosonfirst-export/v2"
+	"github.com/whosonfirst/go-reader/v2"
+	"github.com/whosonfirst/go-whosonfirst-export/v3"
 	"github.com/whosonfirst/go-whosonfirst-id"
 	"github.com/whosonfirst/go-writer/v3"
 )
@@ -59,13 +59,13 @@ func main() {
 			return fmt.Errorf("Failed to create ID provider, %w", err)
 		}
 
-		exh_f, err := sfom_reader.LoadBytesFromID(ctx, exh_r, exhibition_id)
+		exh_f, err := wof_reader.LoadBytes(ctx, exh_r, exhibition_id)
 
 		if err != nil {
 			return fmt.Errorf("Failed to load exhibition record, %w", err)
 		}
 
-		new_parent_f, err := sfom_reader.LoadBytesFromID(ctx, arch_r, parent_id)
+		new_parent_f, err := wof_reader.LoadBytes(ctx, arch_r, parent_id)
 
 		if err != nil {
 			return fmt.Errorf("Failed to load parent record, %w", err)
